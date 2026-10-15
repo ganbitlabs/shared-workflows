@@ -1,7 +1,7 @@
 name: elek
 
 # Reusable elek review (https://github.com/selimozten/elek). Review-only: it can comment, never approve, merge, or close.
-# Runs on pull_request events (opened, synchronize, reopened). Caller: see README.md. Pass only the OPENCODE_API_KEY secret (org or repo) explicitly; do not use `secrets: inherit`.
+# Runs on pull_request events (opened, synchronize, reopened, ready_for_review). Caller: see README.md. Pass only the OPENCODE_API_KEY secret (org or repo) explicitly; do not use `secrets: inherit`.
 on:
   workflow_call:
     inputs:

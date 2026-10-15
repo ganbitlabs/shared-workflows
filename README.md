@@ -11,7 +11,7 @@ Add `.github/workflows/elek.yml` to a repo:
 ```yaml
 name: elek
 on:
-  pull_request: { types: [opened, synchronize, reopened] }
+  pull_request: { types: [opened, synchronize, reopened, ready_for_review] }
 
 permissions:
   contents: read
@@ -31,7 +31,7 @@ jobs:
 
 Then make `OPENCODE_API_KEY` available to the repo, as an org secret or a repo secret. Pass only that secret; avoid `secrets: inherit`, which hands the workflow every secret the repo can see. Optional `with:` inputs: `provider`, `model`, `thinking`, `severity_threshold` (default `important`). Repo-specific review policy goes in the calling repo's `.elek.yml`.
 
-elek reviews when a PR is opened or reopened and on every push to it. There is no comment trigger. Only `pull_request` events from branches in the same repo are reviewed. Fork PRs are skipped, since GitHub withholds secrets from them, so outside contributors cannot spend the API key.
+elek reviews when a PR is opened, reopened, or marked ready for review, and on every push to it. Draft PRs are skipped until they are marked ready. There is no comment trigger. Only `pull_request` events from branches in the same repo are reviewed. Fork PRs are skipped, since GitHub withholds secrets from them, so outside contributors cannot spend the API key.
 
 ## Requirements
 
