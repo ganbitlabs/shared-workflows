@@ -1,0 +1,47 @@
+name: elek
+
+# Reusable elek review (https://github.com/selimozten/elek). Review-only: it can comment, never approve, merge, or close.
+# Caller: see README.md. Requires the OPENCODE_API_KEY secret (org or repo) and `secrets: inherit`.
+on:
+  workflow_call:
+    inputs:
+      provider:
+        type: string
+        default: opencode-go
+      model:
+        type: string
+        default: deepseek-v4.1-flash
+      thinking:
+        type: string
+        default: high
+      review_strategy:
+        type: string
+        default: crosscheck
+      severity_threshold:
+        type: string
+        default: important
+    secrets:
+      OPENCODE_API_KEY:
+        required: true
+
+jobs:
+  review:
+    if: ${{ github.event_name != 'issue_comment' || !endsWith(github.actor, '[bot]') }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    permissions:
+      contents: read
+      pull-requests: write
+      issues: write
+    steps:
+      - uses: actions/checkout@v6.0.3
+        with:
+          fetch-depth: 0
+      - uses: selimozten/elek@v1
+        with:
+          provider: ${{ inputs.provider }}
+          model: ${{ inputs.model }}
+          thinking: ${{ inputs.thinking }}
+          review_strategy: ${{ inputs.review_strategy }}
+          severity_threshold: ${{ inputs.severity_threshold }}
+          opencode_api_key: ${{ secrets.OPENCODE_API_KEY }}
