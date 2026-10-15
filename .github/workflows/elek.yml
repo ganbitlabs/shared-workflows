@@ -20,6 +20,11 @@ on:
       severity_threshold:
         type: string
         default: important
+      pr_prompt:
+        type: string
+        default: >-
+          Review this pull request for correctness, security, performance, and maintainability.
+          Be specific: reference files and line numbers, and report only real problems.
     secrets:
       OPENCODE_API_KEY:
         required: true
@@ -45,3 +50,6 @@ jobs:
           review_strategy: ${{ inputs.review_strategy }}
           severity_threshold: ${{ inputs.severity_threshold }}
           opencode_api_key: ${{ secrets.OPENCODE_API_KEY }}
+          # elek reviews only on a trigger (@pi, a `pi` label, or a prompt). PR events pass the prompt;
+          # comments leave it empty so the @pi request text is used.
+          prompt: ${{ github.event_name == 'pull_request' && inputs.pr_prompt || '' }}

@@ -30,7 +30,7 @@ jobs:
       OPENCODE_API_KEY: ${{ secrets.OPENCODE_API_KEY }}
 ```
 
-Then make `OPENCODE_API_KEY` available to the repo, as an org secret or a repo secret. Pass only that secret; avoid `secrets: inherit`, which hands the workflow every secret the repo can see. Optional `with:` inputs: `provider`, `model`, `thinking`, `review_strategy` (default `crosscheck`), `severity_threshold` (default `important`). Repo-specific review policy goes in the calling repo's `.elek.yml`.
+Then make `OPENCODE_API_KEY` available to the repo, as an org secret or a repo secret. Pass only that secret; avoid `secrets: inherit`, which hands the workflow every secret the repo can see. Optional `with:` inputs: `provider`, `model`, `thinking`, `review_strategy` (default `crosscheck`), `severity_threshold` (default `important`), `pr_prompt` (the review request sent on PR events). Repo-specific review policy goes in the calling repo's `.elek.yml`.
 
 Comment `@pi <request>` on a PR to ask elek for a targeted re-review. Comment-triggered runs only start for owners, members, and collaborators, so outside commenters cannot spend the API key. PRs from forks run without secrets, as GitHub withholds them.
 
