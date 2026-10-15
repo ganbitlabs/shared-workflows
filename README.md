@@ -35,7 +35,7 @@ Comment `@pi <request>` on a PR to ask elek for a targeted re-review.
 
 ## Requirements
 
-`opencode_api_key` support in elek (selimozten/elek, `feat/opencode-provider`). Until that ships in `v1`, the review step fails to authenticate.
+elek v1.2.3 or later (`opencode_api_key` input). The workflow uses `selimozten/elek@v1`.
 
 ## Versioning
 
