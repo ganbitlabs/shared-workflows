@@ -26,7 +26,7 @@ on:
 
 jobs:
   review:
-    if: ${{ github.event_name != 'issue_comment' || !endsWith(github.actor, '[bot]') }}
+    if: ${{ github.event_name != 'issue_comment' || (!endsWith(github.actor, '[bot]') && contains(fromJSON('["OWNER","MEMBER","COLLABORATOR"]'), github.event.comment.author_association)) }}
     runs-on: ubuntu-latest
     timeout-minutes: 15
     permissions:

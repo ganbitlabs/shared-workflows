@@ -26,12 +26,13 @@ concurrency:
 jobs:
   elek:
     uses: ganbitlabs/shared-workflows/.github/workflows/elek.yml@v1
-    secrets: inherit
+    secrets:
+      OPENCODE_API_KEY: ${{ secrets.OPENCODE_API_KEY }}
 ```
 
-Then make `OPENCODE_API_KEY` available to the repo, as an org secret or a repo secret. Optional `with:` inputs: `provider`, `model`, `thinking`, `review_strategy` (default `crosscheck`), `severity_threshold` (default `important`). Repo-specific review policy goes in the calling repo's `.elek.yml`.
+Then make `OPENCODE_API_KEY` available to the repo, as an org secret or a repo secret. Pass only that secret; avoid `secrets: inherit`, which hands the workflow every secret the repo can see. Optional `with:` inputs: `provider`, `model`, `thinking`, `review_strategy` (default `crosscheck`), `severity_threshold` (default `important`). Repo-specific review policy goes in the calling repo's `.elek.yml`.
 
-Comment `@pi <request>` on a PR to ask elek for a targeted re-review.
+Comment `@pi <request>` on a PR to ask elek for a targeted re-review. Only owners, members, and collaborators can trigger it, so outside commenters cannot spend the API key.
 
 ## Requirements
 
