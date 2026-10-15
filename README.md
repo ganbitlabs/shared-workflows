@@ -32,7 +32,7 @@ jobs:
 
 Then make `OPENCODE_API_KEY` available to the repo, as an org secret or a repo secret. Pass only that secret; avoid `secrets: inherit`, which hands the workflow every secret the repo can see. Optional `with:` inputs: `provider`, `model`, `thinking`, `review_strategy` (default `crosscheck`), `severity_threshold` (default `important`). Repo-specific review policy goes in the calling repo's `.elek.yml`.
 
-Comment `@pi <request>` on a PR to ask elek for a targeted re-review. Only owners, members, and collaborators can trigger it, so outside commenters cannot spend the API key.
+Comment `@pi <request>` on a PR to ask elek for a targeted re-review. Comment-triggered runs only start for owners, members, and collaborators, so outside commenters cannot spend the API key. PRs from forks run without secrets, as GitHub withholds them.
 
 ## Requirements
 
@@ -40,4 +40,4 @@ elek v1.2.3 or later (`opencode_api_key` input). The workflow uses `selimozten/e
 
 ## Versioning
 
-Callers pin `@v1`. Change workflows on `main`, then move the tag once a change is verified: `git tag -fa v1 -m ... && git push -f origin v1`. Breaking input changes get `v2`.
+Callers pin `@v1` (floating) or an immutable `@v1.0.x` tag or commit SHA for reproducibility. Change workflows on `main`, then move the tag once a change is verified: tag `v1.0.x` on it, then move `v1` (`git tag -fa v1 -m ... && git push -f origin v1`). Breaking input changes get `v2`.
