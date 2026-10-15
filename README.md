@@ -19,7 +19,7 @@ permissions:
   issues: write
 
 concurrency:
-  group: elek-${{ github.event.pull_request.number || github.event.issue.number || github.ref }}
+  group: elek-${{ github.event.pull_request.number || github.ref }}
   cancel-in-progress: true
 
 jobs:
@@ -31,7 +31,7 @@ jobs:
 
 Then make `OPENCODE_API_KEY` available to the repo, as an org secret or a repo secret. Pass only that secret; avoid `secrets: inherit`, which hands the workflow every secret the repo can see. Optional `with:` inputs: `provider`, `model`, `thinking`, `review_strategy` (default `crosscheck`), `severity_threshold` (default `important`), `pr_prompt` (the review request sent on PR events). Repo-specific review policy goes in the calling repo's `.elek.yml`.
 
-elek reviews when a PR is opened or reopened and on every push to it. There is no comment trigger. PRs from forks run without secrets, as GitHub withholds them, so outside contributors cannot spend the API key.
+elek reviews when a PR is opened or reopened and on every push to it. There is no comment trigger. Only `pull_request` events from branches in the same repo are reviewed. Fork PRs are skipped, since GitHub withholds secrets from them, so outside contributors cannot spend the API key.
 
 ## Requirements
 
