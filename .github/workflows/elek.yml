@@ -1,7 +1,7 @@
 name: elek
 
 # Reusable elek review (https://github.com/selimozten/elek). Review-only: it can comment, never approve, merge, or close.
-# Caller: see README.md. Pass only the OPENCODE_API_KEY secret (org or repo) explicitly; do not use `secrets: inherit`.
+# Runs on pull_request events (opened, synchronize, reopened). Caller: see README.md. Pass only the OPENCODE_API_KEY secret (org or repo) explicitly; do not use `secrets: inherit`.
 on:
   workflow_call:
     inputs:
@@ -31,7 +31,7 @@ on:
 
 jobs:
   review:
-    if: ${{ github.event_name != 'issue_comment' || (!endsWith(github.actor, '[bot]') && contains(fromJSON('["OWNER","MEMBER","COLLABORATOR"]'), github.event.comment.author_association)) }}
+    if: ${{ github.event_name == 'pull_request' }}
     runs-on: ubuntu-latest
     timeout-minutes: 15
     permissions:
@@ -50,6 +50,5 @@ jobs:
           review_strategy: ${{ inputs.review_strategy }}
           severity_threshold: ${{ inputs.severity_threshold }}
           opencode_api_key: ${{ secrets.OPENCODE_API_KEY }}
-          # elek reviews only on a trigger (@pi, a `pi` label, or a prompt). PR events pass the prompt;
-          # comments leave it empty so the @pi request text is used.
-          prompt: ${{ github.event_name == 'pull_request' && inputs.pr_prompt || '' }}
+          # elek only reviews when given a trigger; the prompt is it.
+          prompt: ${{ inputs.pr_prompt }}
