@@ -14,17 +14,9 @@ on:
       thinking:
         type: string
         default: high
-      review_strategy:
-        type: string
-        default: crosscheck
       severity_threshold:
         type: string
         default: important
-      pr_prompt:
-        type: string
-        default: >-
-          Review this pull request for correctness, security, performance, and maintainability.
-          Be specific: reference files and line numbers, and report only real problems.
     secrets:
       OPENCODE_API_KEY:
         required: true
@@ -40,16 +32,13 @@ jobs:
       pull-requests: write
       issues: write
     steps:
-      - uses: actions/checkout@v6.0.3
+      - uses: actions/checkout@df4cb1c069e1874edd31b4311f1884172cec0e10 # v6.0.3
         with:
           fetch-depth: 0
-      - uses: selimozten/elek@v1
+      - uses: selimozten/elek@4142faa458f7bd8681a63000c896bc7d069abce9 # v1.3.0
         with:
           provider: ${{ inputs.provider }}
           model: ${{ inputs.model }}
           thinking: ${{ inputs.thinking }}
-          review_strategy: ${{ inputs.review_strategy }}
           severity_threshold: ${{ inputs.severity_threshold }}
           opencode_api_key: ${{ secrets.OPENCODE_API_KEY }}
-          # elek only reviews when given a trigger; the prompt is it.
-          prompt: ${{ inputs.pr_prompt }}

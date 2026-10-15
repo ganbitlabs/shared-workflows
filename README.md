@@ -29,13 +29,13 @@ jobs:
       OPENCODE_API_KEY: ${{ secrets.OPENCODE_API_KEY }}
 ```
 
-Then make `OPENCODE_API_KEY` available to the repo, as an org secret or a repo secret. Pass only that secret; avoid `secrets: inherit`, which hands the workflow every secret the repo can see. Optional `with:` inputs: `provider`, `model`, `thinking`, `review_strategy` (default `crosscheck`), `severity_threshold` (default `important`), `pr_prompt` (the review request sent on PR events). Repo-specific review policy goes in the calling repo's `.elek.yml`.
+Then make `OPENCODE_API_KEY` available to the repo, as an org secret or a repo secret. Pass only that secret; avoid `secrets: inherit`, which hands the workflow every secret the repo can see. Optional `with:` inputs: `provider`, `model`, `thinking`, `severity_threshold` (default `important`). Repo-specific review policy goes in the calling repo's `.elek.yml`.
 
 elek reviews when a PR is opened or reopened and on every push to it. There is no comment trigger. Only `pull_request` events from branches in the same repo are reviewed. Fork PRs are skipped, since GitHub withholds secrets from them, so outside contributors cannot spend the API key.
 
 ## Requirements
 
-elek v1.2.3 or later (`opencode_api_key` input). The workflow uses `selimozten/elek@v1`.
+The workflow pins elek v1.3.0 and `actions/checkout` by commit SHA. Bump those pins here, then cut a new tag.
 
 ## Versioning
 
