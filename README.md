@@ -25,7 +25,7 @@ concurrency:
 
 jobs:
   elek:
-    uses: ganbitlabs/shared-workflows/.github/workflows/elek.yml@main
+    uses: ganbitlabs/shared-workflows/.github/workflows/elek.yml@v1
     secrets: inherit
 ```
 
@@ -36,3 +36,7 @@ Comment `@pi <request>` on a PR to ask elek for a targeted re-review.
 ## Requirements
 
 `opencode_api_key` support in elek (selimozten/elek, `feat/opencode-provider`). Until that ships in `v1`, the review step fails to authenticate.
+
+## Versioning
+
+Callers pin `@v1`. Change workflows on `main`, then move the tag once a change is verified: `git tag -fa v1 -m ... && git push -f origin v1`. Breaking input changes get `v2`.
