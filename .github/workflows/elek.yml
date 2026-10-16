@@ -26,7 +26,7 @@ jobs:
     # Fork PRs get no secrets, so skip them instead of failing on an empty key.
     if: ${{ github.event_name == 'pull_request' && github.event.pull_request.head.repo.full_name == github.repository }}
     runs-on: ubuntu-latest
-    timeout-minutes: 15
+    timeout-minutes: 30
     permissions:
       contents: read
       pull-requests: write
