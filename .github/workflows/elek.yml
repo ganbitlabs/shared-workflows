@@ -5,6 +5,10 @@ name: elek
 on:
   workflow_call:
     inputs:
+      runner:
+        description: Runner label for the review job
+        type: string
+        default: ubuntu-latest
       provider:
         type: string
         default: opencode-go
@@ -25,7 +29,7 @@ jobs:
   review:
     # Fork PRs get no secrets, so skip them instead of failing on an empty key.
     if: ${{ github.event_name == 'pull_request' && github.event.pull_request.head.repo.full_name == github.repository }}
-    runs-on: ubuntu-latest
+    runs-on: ${{ inputs.runner }}
     timeout-minutes: 30
     permissions:
       contents: read
